@@ -9,10 +9,12 @@ import { Image } from 'react-native';
 import bell from '../assets/bell.png';
 import newspaper from '../assets/newspaper.png';
 import { Home } from './screens/Home';
-import { Profile } from './screens/Profile';
-import { Settings } from './screens/Settings';
+import {  Users } from './screens/Users';
+import { Join } from './screens/Join';
 import { Updates } from './screens/Updates';
 import { NotFound } from './screens/NotFound';
+import { ChatScreen } from './screens/ChatScreen';
+
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
@@ -59,8 +61,8 @@ const RootStack = createNativeStackNavigator({
         headerShown: false,
       },
     },
-    Profile: {
-      screen: Profile,
+    Users: {
+      screen: Users,
       linking: {
         path: ':user(@[a-zA-Z0-9-_]+)',
         parse: {
@@ -71,8 +73,10 @@ const RootStack = createNativeStackNavigator({
         },
       },
     },
-    Settings: {
-      screen: Settings,
+          
+
+    Join: {
+      screen: Join,
       options: ({ navigation }) => ({
         presentation: 'modal',
         headerRight: () => (
@@ -89,6 +93,21 @@ const RootStack = createNativeStackNavigator({
       },
       linking: {
         path: '*',
+      },
+    },
+    Chat: {
+      screen: ChatScreen,
+      options: {
+        title: 'Chat',
+      },
+      linking: {
+        path: 'chat/:chatId',
+        parse: {
+          chatId: (value) => value,
+        },
+        stringify: {
+          chatId: (value) => value,
+        },
       },
     },
   },
