@@ -31,7 +31,7 @@ const handleLogin = async () => {
         email: profileData.email,
         userUid: profileData.userUid,
       }));
-      navigation.navigate("Users", { User: profileData as UserType });
+      navigation.navigate("Users", { Users: profileData as UserType });
     } else {
       Alert.alert('Hata', 'Kullanıcı profili bulunamadı.');
     }
