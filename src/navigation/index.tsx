@@ -100,15 +100,7 @@ const RootStack = createNativeStackNavigator({
       options: {
         title: 'Chat',
       },
-      linking: {
-        path: 'chat/:chatId',
-        parse: {
-          chatId: (value) => value,
-        },
-        stringify: {
-          chatId: (value) => value,
-        },
-      },
+   
     },
   },
 });

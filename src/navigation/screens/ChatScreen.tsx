@@ -16,13 +16,15 @@ type ChatScreenRouteProps = {
 };
 
 
-export function ChatScreen({ route }: ChatScreenRouteProps) {
-  const { chatId, currentUserId, receiverId } = route.params;
+export function ChatScreen( props : ChatScreenRouteProps) {
+console.log(props);
+  const { chatId, currentUserId, receiverId } = props.route.params;
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [text, setText] = useState('');
   const db = getFirestore();
 
   useEffect(() => {
+   
     const messagesRef = collection(db, 'Messages', chatId, 'messages');
     const q = query(messagesRef, orderBy('timestamp'));
     const unsubscribe = onSnapshot(q, (snapshot) => {

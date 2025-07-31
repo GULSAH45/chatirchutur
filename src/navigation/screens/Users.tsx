@@ -54,8 +54,9 @@ export function Users() {
 
   const handleUserPress = (receiverId: string) => {
     if (!currentUser) return;
-    
+    console.log(currentUser);
     navigation.navigate('Chat', {
+      chatId: [receiverId, currentUser.userUid].sort().join("-"),
       currentUserId: currentUser.userUid,
       receiverId
     });

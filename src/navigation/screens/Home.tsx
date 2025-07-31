@@ -10,8 +10,8 @@ import type { UserType } from './Users';
 
 
 export function Home() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('gulsah@seyma.com');
+  const [password, setPassword] = useState('123456');
 const navigation = useNavigation();
 
 const handleLogin = async () => {
@@ -31,6 +31,7 @@ const handleLogin = async () => {
         email: profileData.email,
         userUid: profileData.userUid,
       }));
+      console.log(profileData);
       navigation.navigate("Users", { Users: profileData as UserType });
     } else {
       Alert.alert('Hata', 'Kullanıcı profili bulunamadı.');
