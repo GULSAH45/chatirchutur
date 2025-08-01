@@ -8,12 +8,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Image } from 'react-native';
 import bell from '../assets/bell.png';
 import newspaper from '../assets/newspaper.png';
-import { Home } from './screens/Home';
+
 import {  Users } from './screens/Users';
 import { Join } from './screens/Join';
 import { Updates } from './screens/Updates';
-import { NotFound } from './screens/NotFound';
+
 import { ChatScreen } from './screens/ChatScreen';
+import { Home } from './screens/Home';
 
 
 const HomeTabs = createBottomTabNavigator({

@@ -11,9 +11,17 @@ export function Join() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
 
   const handleSignUp = async () => {
+    if (!fullName || !email || !password) {
+      Alert.alert('Hata', 'Lütfen tüm alanları doldurunuz');
+      return;
+    }
+
+    setIsLoading(true);
+    
     try {
       const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -30,10 +38,22 @@ export function Join() {
   
       await AsyncStorage.setItem('currentUser', JSON.stringify(userData));
   
-      navigation.navigate("Users", { User: userData });
+      navigation.navigate("Users" as never, { User: userData } as never);
     } catch (error: any) {
       console.error('Kayıt hatası:', error);
-      Alert.alert('Kayıt Hatası', error.message);
+      let errorMessage = 'Bir hata oluştu';
+      
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = 'Bu email adresi zaten kullanımda';
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = 'Şifre en az 6 karakter olmalıdır';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'Geçersiz email adresi';
+      }
+      
+      Alert.alert('Kayıt Hatası', errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
   
@@ -72,8 +92,14 @@ export function Join() {
         onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-        <Text style={styles.buttonText}>Kayıt Ol</Text>
+      <TouchableOpacity 
+        style={[styles.button, isLoading && styles.disabledButton]} 
+        onPress={handleSignUp}
+        disabled={isLoading}
+      >
+        <Text style={styles.buttonText}>
+          {isLoading ? 'İşleniyor...' : 'Kayıt Ol'}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -85,6 +111,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
+    backgroundColor: '#f5f5f5',
   },
   title: {
     fontSize: 22,
@@ -97,33 +124,39 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
     color: '#0A400C',
+    alignSelf: 'flex-start',
+    marginLeft: '10%',
   },
   input: {
     width: '80%',
-    padding: 10,
+    padding: 12,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#ddd',
     borderRadius: 8,
-    marginBottom: 5,
+    marginBottom: 10,
     backgroundColor: '#fff',
   },
   button: {
     width: '80%',
-    padding: 10,
+    padding: 15,
     backgroundColor: '#0A400C',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: 20,
+  },
+  disabledButton: {
+    backgroundColor: '#cccccc',
   },
   buttonText: {
     color: '#fff',
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   vintageImage: {
     width: 120,
     height: 120,
-    marginBottom: 15,
+    marginBottom: 20,
+    borderRadius: 60,
   },
 });
