@@ -1,5 +1,5 @@
 import { RouteProp } from '@react-navigation/native';
-import { View, Text, FlatList, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TextInput, Button, StyleSheet, ImageBackground } from 'react-native';
 import { useState, useEffect } from 'react';
 import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
 
@@ -49,39 +49,76 @@ console.log(props);
     }
   };
   
-
-  return (
-    <View style={styles.container}>
-      <FlatList
-        data={messages}
-        keyExtractor={(_, i) => i.toString()}
-        renderItem={({ item }) => (
-          <View style={[
-            styles.message,
-            item.senderId === currentUserId ? styles.myMessage : styles.otherMessage
-          ]}>
-            <Text>{item.text}</Text>
-          </View>
-        )}
-      />
-      <View style={styles.inputRow}>
-        <TextInput
-          style={styles.input}
-          value={text}
-          onChangeText={setText}
-          placeholder="Mesaj yaz..."
+ return (
+    <ImageBackground 
+      source={require('../../assets/nature.png')} 
+      style={styles.backgroundImage}
+      resizeMode="cover"
+    >
+      <View style={styles.container}>
+        <FlatList
+          data={messages}
+          keyExtractor={(_, i) => i.toString()}
+          renderItem={({ item }) => (
+            <View style={[
+              styles.message,
+              item.senderId === currentUserId ? styles.myMessage : styles.otherMessage
+            ]}>
+              <Text>{item.text}</Text>
+            </View>
+          )}
         />
-        <Button title="Gönder" onPress={sendMessage} />
+        <View style={styles.inputRow}>
+          <TextInput
+            style={styles.input}
+            value={text}
+            onChangeText={setText}
+            placeholder="Mesaj yaz..."
+          />
+          <Button title="Gönder" onPress={sendMessage} />
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding:70 },
-  message: { marginVertical: 5, padding: 10, borderRadius: 8, maxWidth: '70%' },
-  myMessage: { backgroundColor: '#DCF8C6', alignSelf: 'flex-end' },
-  otherMessage: { backgroundColor: '#FFF', alignSelf: 'flex-start' },
-  inputRow: { flexDirection: 'row', alignItems: 'center', marginTop: 10 },
-  input: { flex: 1, borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 8, marginRight: 8 }
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%'
+  },
+  container: { 
+    flex: 1, 
+    padding: 70,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)' // İsteğe bağlı: arka plana hafif bir opaklık
+  },
+  message: { 
+    marginVertical: 5, 
+    padding: 10, 
+    borderRadius: 8, 
+    maxWidth: '70%' 
+  },
+  myMessage: { 
+    backgroundColor: '#DCF8C6', 
+    alignSelf: 'flex-end' 
+  },
+  otherMessage: { 
+    backgroundColor: '#FFF', 
+    alignSelf: 'flex-start' 
+  },
+  inputRow: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    marginTop: 10 
+  },
+  input: { 
+    flex: 1, 
+    borderWidth: 1, 
+    borderColor: '#ccc', 
+    borderRadius: 8, 
+    padding: 8, 
+    marginRight: 8,
+    backgroundColor: 'white' // Input arka planı
+  }
 });

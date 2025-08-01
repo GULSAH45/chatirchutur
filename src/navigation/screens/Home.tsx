@@ -84,16 +84,17 @@ subtitle:{
   color:'#004030'
 },
 label:{
+
   fontSize:15,
   fontWeight:'bold',
-  marginBottom:5,
+  marginBottom:3,
   color:'#0A400C'
 },  
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 10,
+    gap: 7,
   },
   input: {
     width: '80%',
@@ -105,7 +106,7 @@ label:{
     backgroundColor: '#fff',
   },
   button:{
-    width:'80%',
+    width:'50%',
     padding:10,
     backgroundColor:'#0A400C',
     borderRadius:8,

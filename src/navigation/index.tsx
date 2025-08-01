@@ -21,7 +21,7 @@ const HomeTabs = createBottomTabNavigator({
     Home: {
       screen: Home,
       options: {
-        title: 'Feed',
+      
         tabBarIcon: ({ color, size }) => (
           <Image
             source={newspaper}
@@ -63,15 +63,7 @@ const RootStack = createNativeStackNavigator({
     },
     Users: {
       screen: Users,
-      linking: {
-        path: ':user(@[a-zA-Z0-9-_]+)',
-        parse: {
-          user: (value) => value.replace(/^@/, ''),
-        },
-        stringify: {
-          user: (value) => `@${value}`,
-        },
-      },
+  
     },
           
 
@@ -86,20 +78,18 @@ const RootStack = createNativeStackNavigator({
         ),
       }),
     },
-    NotFound: {
-      screen: NotFound,
-      options: {
-        title: '404',
-      },
-      linking: {
-        path: '*',
-      },
-    },
+
     Chat: {
       screen: ChatScreen,
-      options: {
+      options: ({ route }) => ({
         title: 'Chat',
-      },
+        headerBackTitleVisible: false,
+        headerTitle: () => (
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+            {}
+          </Text>
+        ),
+      }),
    
     },
   },

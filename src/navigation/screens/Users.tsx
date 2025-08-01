@@ -1,5 +1,5 @@
 import { Text } from '@react-navigation/elements';
-import { StyleSheet, View, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, FlatList, TouchableOpacity, Image } from 'react-native';
 import { useEffect, useState } from 'react';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
@@ -69,11 +69,15 @@ export function Users() {
         keyExtractor={(item) => item.userUid}
         renderItem={({ item }) => (
           <TouchableOpacity 
+
             style={styles.item}
             onPress={() => handleUserPress(item.userUid)}
           >
+            <Image source={require('../../assets/speechBubble.png') } style={styles.Speech}/>
             <Text style={styles.name}>{item.fullName}</Text>
             <Text style={styles.email}>{item.email}</Text>
+            <Text></Text>
+
           </TouchableOpacity>
         )}
       />
@@ -82,12 +86,20 @@ export function Users() {
 }
 
 const styles = StyleSheet.create({
+  Speech:{
+    width: 80,
+    height:60,
+  
+    borderRadius: 25,
+
+  },
   container: {
     flex: 1,
     padding: 15,
+
   },
   item: {
-    padding: 15,
+    padding: 25,
     borderBottomWidth: 1,
     borderColor: '#eee',
     width: '100%',
@@ -95,10 +107,10 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     fontWeight: '600',
-    marginBottom: 4,
+
   },
   email: {
     fontSize: 14,
-    color: '#666',
+    color: '#EA2F14',
   },
 });
